@@ -1,6 +1,7 @@
 #include "SortingAlgorithms.hpp"
+#include "DrawVector.hpp"
 
-void SelectionSort(std::vector<int> vec, int size){
+void SelectionSort(std::vector<int>& vec, int size){
     for(int step = 0; step < size-1; step++){
         int min_idx = step;
         for(int i = step+1; i < size; i++){
@@ -11,20 +12,21 @@ void SelectionSort(std::vector<int> vec, int size){
     }
 }
 
-void InsertionSort(std::vector<int> vec, int size){
-    for (int step = 1; step < size; step++) {
-    int key = vec[step];
-    int j = step - 1;
+void InsertionSort(std::vector<int>& vec, int n){
+    int i, key, j;
+    for (i = 1; i < n; i++) {
+        key = vec[i];
+        j = i - 1;
 
-    while (key < vec[j] && j >= 0) {
-      vec[j + 1] = vec[j];
-      --j;
+        while (j >= 0 && vec[j] > key) {
+            vec[j + 1] = vec[j];
+            j = j - 1;
+        }
+        vec[j + 1] = key;
     }
-    vec[j + 1] = key;
-  }
 }
 
-void Merge(std::vector<int> vec, size_t p, size_t q, size_t r){
+void Merge(std::vector<int>& vec, size_t p, size_t q, size_t r){
 
     int n1 = q - p + 1;
     int n2 = r - q;
@@ -65,16 +67,18 @@ void Merge(std::vector<int> vec, size_t p, size_t q, size_t r){
         j++;
         k++;
     }
+    delete [] L;
+    delete [] M;
 }
 
-void MergeSort(std::vector<int> vec, size_t l, size_t r){
-    int m = l + (r - l) / 2;
-
-    MergeSort(vec, l, m);
-    MergeSort(vec, m + 1, r);
-
-
-    Merge(vec, l, m, r);
+void MergeSort(std::vector<int>& vec, size_t const begin, size_t const end){
+     if (begin >= end)
+        return;
+ 
+    int mid = begin + (end - begin) / 2;
+    MergeSort(vec, begin, mid);
+    MergeSort(vec, mid + 1, end);
+    Merge(vec, begin, mid, end);
 }
 
 void Swap(int* a, int* b){
@@ -83,7 +87,7 @@ void Swap(int* a, int* b){
     *b = t;
 }
 
-int Partition(std::vector<int> vec, int low, int high){
+int Partition(std::vector<int>& vec, int low, int high){
     int pivot = vec[high];
     int i = (low -1);
 
@@ -98,7 +102,7 @@ int Partition(std::vector<int> vec, int low, int high){
     return(i+1);
 }
 
-void QuickSort(std::vector<int> vec, size_t low, size_t high){
+void QuickSort(std::vector<int>& vec, size_t low, size_t high){
     if(low < high){
         int pi = Partition(vec, low, high);
         QuickSort(vec, low, pi-1);
@@ -106,19 +110,25 @@ void QuickSort(std::vector<int> vec, size_t low, size_t high){
     }
 }
 
-void BubbleSort(std::vector<int> vec){
-    for(int i = 0; i < vec.size(); i++){
-        for(int j = 0; j < vec.size() - i; j++){
-            if(vec[j] > vec[j+1]){
-                int temp = vec[j];
-                vec[j] = vec[j+1];
-                vec[j+1] = temp;
+void BubbleSort(std::vector<int>& vec, sf::RenderWindow& window){
+    if(window.isOpen()){
+        for(int i = 0; i < vec.size() - 1; i++){
+            for(int j = 0; j < vec.size() - i - 1; j++){
+                if(vec[j] > vec[j+1]){
+                    int temp = vec[j];
+                    vec[j] = vec[j+1];
+                    vec[j+1] = temp;
+
+                    DrawVector(vec, window, 50);
+                }
             }
         }
+    }else{
+        return;
     }
 }
 
-void Heapify(std::vector<int> vec, int n, int i){
+void Heapify(std::vector<int>& vec, int n, int i){
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
@@ -135,7 +145,7 @@ void Heapify(std::vector<int> vec, int n, int i){
     }
 }
 
-void HeapSort(std::vector<int> vec, int n){
+void HeapSort(std::vector<int>& vec, int n){
     for (int i = n / 2 - 1; i >= 0; i--){
       Heapify(vec, n, i);
     }
