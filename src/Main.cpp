@@ -29,14 +29,19 @@ int main(){
                         BubbleSort(vec, window);
                         break;
                     case sf::Keyboard::Num2:
+                        MergeSort(vec, 0, vec.size() - 1, window);
                         break;
                     case sf::Keyboard::Num3:
+                        SelectionSort(vec, vec.size(), window);
                         break;
                     case sf::Keyboard::Num4:
+                        InsertionSort(vec, vec.size(), window);
                         break;
                     case sf::Keyboard::Num5:
+                        QuickSort(vec, 0, vec.size()-1, window);
                         break;
                     case sf::Keyboard::Num6:
+                        HeapSort(vec, vec.size(), window);
                         break;
                     default:
                         window.close();
