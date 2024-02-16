@@ -2,6 +2,10 @@
 #include "SortingAlgorithms.hpp"
 #include <random>
 
+void ShuffleVector(std::vector<int>& vec, std::default_random_engine rng){
+    std::shuffle(vec.begin(), vec.end(), rng);
+}
+
 
 int main(){
     auto rd = std::random_device {};
@@ -13,7 +17,7 @@ int main(){
     for(int i = 0; i < n; i++){
         vec.push_back(i);
     }
-    std::shuffle(vec.begin(), vec.end(), rng);
+    ShuffleVector(vec, rng);
     
     sf::RenderWindow window(sf::VideoMode(800, 600), "Sorting algorithms");
     window.setFramerateLimit(60);
@@ -50,10 +54,4 @@ int main(){
             }
         }
     }
-    //BubbleSort(vec);
-    //SelectionSort(vec, vec.size());
-    //InsertionSort(vec, vec.size());
-    //MergeSort(vec, 0, vec.size()-1);
-    //QuickSort(vec, 0, vec.size()-1);
-    //HeapSort(vec, vec.size());
 }
