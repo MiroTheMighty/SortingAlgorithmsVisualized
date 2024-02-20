@@ -26,45 +26,59 @@ void DrawWindow(std::vector<int>& vec, std::default_random_engine rng){
     menuText.setPosition(255, 150);
     menuText.setFillColor(sf::Color::White);
 
+    bool finished = true;
+
     while (window.isOpen()) {
         window.clear(sf::Color::Black);
         window.draw(menuText);
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
+            if (event.type == sf::Event::Closed && finished) {
                 window.close();
             }
-            if(event.type == sf::Event::KeyPressed){
+            if(event.type == sf::Event::KeyPressed && finished){
                 switch(event.key.code){
                     case sf::Keyboard::Num1:
+                        finished = false;
                         BubbleSort(vec, window);
                         SortingDone(vec, window);
                         ShuffleVector(vec, rng);
+                        finished = true;
                         break;
                     case sf::Keyboard::Num2:
+                        finished = false;
                         MergeSort(vec, 0, vec.size() - 1, window);
                         SortingDone(vec, window);
                         ShuffleVector(vec, rng);
+                        finished = true;
                         break;
                     case sf::Keyboard::Num3:
+                        finished = false;
                         SelectionSort(vec, vec.size(), window);
                         SortingDone(vec, window);
                         ShuffleVector(vec, rng);
+                        finished = true;
                         break;
                     case sf::Keyboard::Num4:
+                        finished = false;
                         InsertionSort(vec, vec.size(), window);
                         SortingDone(vec, window);
                         ShuffleVector(vec, rng);
+                        finished = true;
                         break;
                     case sf::Keyboard::Num5:
+                        finished = false;
                         QuickSort(vec, 0, vec.size()-1, window);
                         SortingDone(vec, window);
                         ShuffleVector(vec, rng);
+                        finished = true;
                         break;
                     case sf::Keyboard::Num6:
+                        finished = false;
                         HeapSort(vec, vec.size(), window);
                         SortingDone(vec, window);
                         ShuffleVector(vec, rng);
+                        finished = true;
                         break;
                     default:
                         continue;
@@ -82,7 +96,6 @@ int main(){
     auto rng = std::default_random_engine {rd()};
    
     int n = 42;
-
     std::vector<int> vec;
     GenerateVector(vec, n);
     ShuffleVector(vec, rng); 
