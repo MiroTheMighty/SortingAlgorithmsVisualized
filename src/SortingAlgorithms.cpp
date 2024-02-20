@@ -135,7 +135,7 @@ void BubbleSort(std::vector<int>& vec, sf::RenderWindow& window){
                 vec[j] = vec[j+1];
                 vec[j+1] = temp;
             }
-            DrawVector(vec, window, j, j+1, 25);
+            DrawVector(vec, window, j, j+1);
         }
     }
 }
